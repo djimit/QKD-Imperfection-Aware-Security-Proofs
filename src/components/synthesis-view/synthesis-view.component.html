@@ -1,0 +1,78 @@
+<div class="space-y-8">
+  <!-- Implementation Gap -->
+  <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+    <h2 class="text-xl font-bold text-white mb-2">The Implementation Gap</h2>
+    <p class="text-zinc-400">
+      Most QKD security proofs rely on idealized models of hardware (e.g., perfect single-photon sources, 100% efficient detectors).
+      <app-evidence-badge label="From paper"></app-evidence-badge>
+      Real-world devices, however, suffer from numerous imperfections that can be exploited by an adversary.
+      <app-evidence-badge label="From cited ref"></app-evidence-badge>
+      This paper provides a systematic framework to bridge this "implementation gap" by formally incorporating device imperfections into security proofs, moving from theoretical security to practical, verifiable security.
+      <app-evidence-badge label="Inference"></app-evidence-badge>
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Quantum Hacking -->
+    <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6 space-y-4">
+      <h2 class="text-xl font-bold text-white">Quantum Hacking Demonstrations</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        @for (attack of attacks; track attack.name) {
+          <div class="p-4 rounded-md border" [class.border-amber-500/30]="attack.color === 'amber'" [class.bg-amber-500/10]="attack.color === 'amber'" [class.border-cyan-500/30]="attack.color === 'cyan'" [class.bg-cyan-500/10]="attack.color === 'cyan'">
+            <h3 class="font-semibold text-white">{{ attack.name }}</h3>
+            <span class="text-xs font-mono" [class.text-amber-400]="attack.color === 'amber'" [class.text-cyan-400]="attack.color === 'cyan'">Target: {{ attack.target }}</span>
+            <p class="text-sm text-zinc-400 mt-1">{{ attack.description }} <app-evidence-badge [label]="attack.evidence"></app-evidence-badge></p>
+          </div>
+        }
+      </div>
+    </div>
+    
+    <!-- Contribution Overview -->
+    <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6 space-y-4">
+        <h2 class="text-xl font-bold text-white">Contribution Overview</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="bg-zinc-800/50 p-4 rounded-md">
+                <h3 class="font-semibold text-green-400">Analytical Contributions</h3>
+                <ul class="list-disc list-inside text-sm text-zinc-400 mt-2 space-y-1">
+                    <li>Composable proof framework for imperfections.</li>
+                    <li>Map-based physical-to-abstract modeling.</li>
+                    <li>Generalized finite-size analysis.</li>
+                </ul>
+            </div>
+            <div class="bg-zinc-800/50 p-4 rounded-md">
+                <h3 class="font-semibold text-blue-400">Numerical Contributions</h3>
+                <ul class="list-disc list-inside text-sm text-zinc-400 mt-2 space-y-1">
+                    <li>SDP-based solver for key rate calculation.</li>
+                    <li>Modeling of detector dead time effects.</li>
+                    <li>Hybrid proof techniques for complex models.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Paper Structure -->
+  <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+    <h2 class="text-xl font-bold text-white mb-4">Paper Structure Map</h2>
+    <div class="flex space-x-1 border-b border-zinc-700 mb-4">
+      @for(filter of filters; track filter) {
+        <button
+          (click)="setFilter(filter)"
+          class="px-3 py-1 text-sm rounded-t-md transition-colors"
+          [class.bg-zinc-800]="activeFilter() === filter"
+          [class.text-white]="activeFilter() === filter"
+          [class.text-zinc-400]="activeFilter() !== filter"
+          [class.hover:bg-zinc-700]="activeFilter() !== filter"
+        >{{ filter }}</button>
+      }
+    </div>
+    <div class="space-y-2">
+      @for(section of filteredSections(); track section.title) {
+        <div class="flex items-center text-sm">
+          <span class="font-mono text-cyan-400 w-32 flex-shrink-0">{{ section.title }}</span>
+          <span class="text-zinc-400">{{ section.purpose }}</span>
+        </div>
+      }
+    </div>
+  </div>
+</div>

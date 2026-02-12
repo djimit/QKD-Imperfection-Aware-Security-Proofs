@@ -1,0 +1,96 @@
+<div class="space-y-4">
+  <!-- C.1 Composable Security -->
+  <div class="bg-zinc-900 border border-zinc-800 rounded-lg">
+    <button (click)="toggleSection('c1')" class="w-full flex justify-between items-center p-4 text-left">
+      <h2 class="text-lg font-bold text-white">C.1 Composable Security</h2>
+      <span class="text-xl text-zinc-400 transition-transform" [class.rotate-45]="openSections()['c1']">+</span>
+    </button>
+    @if(openSections()['c1']) {
+      <div class="p-6 pt-0 border-t border-zinc-800 space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div class="bg-zinc-800/50 p-4 rounded-md">
+                <h3 class="font-semibold text-green-400">ε-Correctness</h3>
+                <p class="text-zinc-400 mt-1">The final keys of Alice and Bob are identical except with probability ε_cor.</p>
+            </div>
+            <div class="bg-zinc-800/50 p-4 rounded-md">
+                <h3 class="font-semibold text-blue-400">ε-Secrecy</h3>
+                <p class="text-zinc-400 mt-1">The key is independent of Eve's view of the system except with probability ε_sec.</p>
+            </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- C.2 Map-Based Modeling -->
+  <div class="bg-zinc-900 border border-zinc-800 rounded-lg">
+    <button (click)="toggleSection('c2')" class="w-full flex justify-between items-center p-4 text-left">
+      <h2 class="text-lg font-bold text-white">C.2 Map-Based Modeling</h2>
+      <span class="text-xl text-zinc-400 transition-transform" [class.rotate-45]="openSections()['c2']">+</span>
+    </button>
+    @if(openSections()['c2']) {
+      <div class="p-6 pt-0 border-t border-zinc-800">
+        <div class="flex items-center justify-between text-center font-mono text-xs">
+            <div class="p-2 bg-fuchsia-500/20 rounded">Physical Device</div>
+            <div class="text-zinc-500 text-lg">&rarr;</div>
+            <div class="p-2 bg-fuchsia-500/20 rounded">Imperfection Model</div>
+            <div class="text-zinc-500 text-lg">&rarr;</div>
+            <div class="p-2 bg-fuchsia-500/20 rounded">Modified POVMs</div>
+            <div class="text-zinc-500 text-lg">&rarr;</div>
+            <div class="p-2 bg-fuchsia-500/20 rounded">Abstract Channel</div>
+            <div class="text-zinc-500 text-lg">&rarr;</div>
+            <div class="p-2 bg-fuchsia-500/20 rounded">Security Proof</div>
+            <div class="text-zinc-500 text-lg">&rarr;</div>
+            <div class="p-2 bg-green-500/20 rounded">Secure Key Rate</div>
+        </div>
+      </div>
+    }
+  </div>
+  
+  <!-- C.3 Finite-Size Tools -->
+  <div class="bg-zinc-900 border border-zinc-800 rounded-lg">
+    <button (click)="toggleSection('c3')" class="w-full flex justify-between items-center p-4 text-left">
+      <h2 class="text-lg font-bold text-white">C.3 Finite-Size Tools</h2>
+      <span class="text-xl text-zinc-400 transition-transform" [class.rotate-45]="openSections()['c3']">+</span>
+    </button>
+    @if(openSections()['c3']) {
+      <div class="p-6 pt-0 border-t border-zinc-800 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <h3 class="font-semibold text-white mb-2">Key Security Parameters</h3>
+            <div class="space-y-1 text-sm font-mono">
+              @for(param of securityParameters; track param.param) {
+                <div><span class="text-cyan-400 w-20 inline-block">{{param.param}}:</span> <span class="text-zinc-400">{{param.desc}}</span></div>
+              }
+            </div>
+        </div>
+        <div>
+            <h3 class="font-semibold text-white mb-2">Dominant Penalties</h3>
+            <div class="space-y-3">
+              @for(penalty of finiteSizePenalties; track penalty.name) {
+                <div class="p-3 bg-zinc-800/50 rounded-md">
+                    <h4 class="font-semibold text-amber-400">{{penalty.name}}</h4>
+                    <p class="text-xs font-mono text-zinc-400">Scaling: {{penalty.scaling}}</p>
+                </div>
+              }
+            </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- C.4 Numerical Optimization -->
+  <div class="bg-zinc-900 border border-zinc-800 rounded-lg">
+    <button (click)="toggleSection('c4')" class="w-full flex justify-between items-center p-4 text-left">
+      <h2 class="text-lg font-bold text-white">C.4 Numerical Optimization</h2>
+       <span class="text-xl text-zinc-400 transition-transform" [class.rotate-45]="openSections()['c4']">+</span>
+    </button>
+    @if(openSections()['c4']) {
+       <div class="p-6 pt-0 border-t border-zinc-800">
+          <p class="text-zinc-400 mb-4">The key rate is found by solving an optimization problem, typically a Semidefinite Program (SDP), derived from the Devetak-Winter rate formula:</p>
+          <div class="bg-black/50 p-4 rounded-md text-sm font-mono text-green-300 border border-zinc-700 text-center">
+            R &ge; D(p(Z|E) || p(Z)) - D(p(X|E) || p(X))
+          </div>
+       </div>
+    }
+  </div>
+
+</div>

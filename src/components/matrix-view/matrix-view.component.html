@@ -1,0 +1,93 @@
+<div class="space-y-8">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="lg:col-span-2 bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+      <h2 class="text-xl font-bold text-white mb-4">Imperfection to Proof-Technique Matrix</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left text-zinc-400">
+          <thead class="text-xs text-zinc-300 uppercase bg-zinc-800">
+            <tr>
+              <th scope="col" class="px-4 py-3">Category</th>
+              <th scope="col" class="px-4 py-3">Imperfection</th>
+              <th scope="col" class="px-4 py-3">Proof Fit</th>
+              <th scope="col" class="px-4 py-3">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of imperfections; track item.imperfection) {
+              <tr class="border-b border-zinc-800 hover:bg-zinc-800/50 cursor-pointer" (click)="openDialog(item)">
+                <td class="px-4 py-3 font-medium text-white">{{ item.category }}</td>
+                <td class="px-4 py-3">{{ item.imperfection }}</td>
+                <td class="px-4 py-3">
+                  <span class="px-2 py-1 text-xs font-semibold rounded-md border" [class]="getProofFitClass(item.proofFit)">
+                    {{ item.proofFit }}
+                  </span>
+                </td>
+                <td class="px-4 py-3 text-cyan-400 hover:text-cyan-300">Expand</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Worked Example -->
+    <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+      <h2 class="text-xl font-bold text-white mb-2">Worked Micro-Example</h2>
+      <h3 class="font-semibold text-zinc-300 mb-2">Modeling Detector Efficiency Mismatch</h3>
+      <p class="text-sm text-zinc-400 mb-4">An ideal detector's measurement operator (POVM element) for outcome 'i' is Π_i. With basis-dependent efficiency η_b, it becomes:</p>
+      <div class="bg-black/50 p-4 rounded-md text-sm font-mono text-cyan-300 border border-zinc-700">
+        <p>Π'_i = η_b * Π_i</p>
+        <p class="mt-2 text-zinc-400">// This modification is carried through the entire security proof, affecting the estimated channel parameters.</p>
+      </div>
+      <p class="text-xs text-zinc-500 mt-4">This shows how a physical flaw is translated into a mathematical object for the proof. <app-evidence-badge label="From paper"></app-evidence-badge></p>
+    </div>
+  </div>
+
+  <!-- Dialog for Imperfection Details -->
+  @if (selectedImperfection(); as imperfection) {
+    <div class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center" (click)="closeDialog()">
+      <div class="bg-zinc-900 border border-zinc-700 rounded-lg shadow-xl w-full max-w-2xl m-4" (click)="$event.stopPropagation()">
+        <div class="flex items-start justify-between p-4 border-b border-zinc-700">
+          <div>
+            <h3 class="text-lg font-semibold text-white">{{ imperfection.imperfection }}</h3>
+            <p class="text-sm text-zinc-400">Category: {{ imperfection.category }}</p>
+          </div>
+          <button (click)="closeDialog()" class="text-zinc-400 hover:text-white">&times;</button>
+        </div>
+        <div class="p-6 space-y-4 text-sm">
+          <div class="grid grid-cols-3 gap-4">
+            <strong class="text-zinc-300 col-span-1">Ideal Violated:</strong>
+            <p class="text-zinc-400 col-span-2">{{ imperfection.idealViolated }}</p>
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            <strong class="text-zinc-300 col-span-1">Attack Surface:</strong>
+            <p class="text-zinc-400 col-span-2">{{ imperfection.attackSurface }}</p>
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            <strong class="text-zinc-300 col-span-1">Modeling Strategy:</strong>
+            <p class="text-zinc-400 col-span-2">{{ imperfection.modeling }}</p>
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            <strong class="text-zinc-300 col-span-1">Proof Fit:</strong>
+            <div class="col-span-2">
+              <span class="px-2 py-1 text-xs font-semibold rounded-md border" [class]="getProofFitClass(imperfection.proofFit)">
+                {{ imperfection.proofFit }}
+              </span>
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            <strong class="text-zinc-300 col-span-1">Residual Risk:</strong>
+            <p class="text-zinc-400 col-span-2">{{ imperfection.risk }}</p>
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            <strong class="text-zinc-300 col-span-1">Experimental Bounding:</strong>
+            <p class="text-zinc-400 col-span-2">{{ imperfection.bounding }}</p>
+          </div>
+        </div>
+        <div class="p-4 bg-zinc-800/50 border-t border-zinc-700 text-right">
+            <button (click)="closeDialog()" class="px-4 py-2 bg-cyan-600 text-white text-sm font-medium rounded-md hover:bg-cyan-700">Close</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

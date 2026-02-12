@@ -1,0 +1,80 @@
+<div class="space-y-8">
+  <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+    <h2 class="text-xl font-bold text-white mb-4">Research Plan Timeline (24 Weeks)</h2>
+
+    <!-- Gantt Chart -->
+    <div class="relative">
+      <!-- Week headers -->
+      <div class="grid grid-cols-24 text-center text-xs font-mono text-zinc-500 border-b-2 border-zinc-700 pb-1">
+        @for (week of weeks; track week) {
+          <span>{{ week }}</span>
+        }
+      </div>
+
+      <!-- Work Package Bars -->
+      <div class="relative mt-4 space-y-2 h-48">
+        @for (wp of workPackages; track wp.id; let i = $index) {
+          <div 
+            class="absolute h-8 flex items-center px-2 rounded-md text-sm font-semibold text-white cursor-pointer transition-all duration-200 hover:opacity-100"
+            [class]="wp.color"
+            [class.opacity-80]="selectedWorkPackage() !== null && selectedWorkPackage() !== wp"
+            [style]="getWorkPackageStyle(wp)"
+            [style.top]="i * 40 + 'px'"
+            (click)="selectWorkPackage(wp)">
+            {{ wp.id }}: {{ wp.name }}
+          </div>
+        }
+      </div>
+
+      <!-- Verification Gates -->
+      <div class="relative h-6 mt-2 border-t-2 border-zinc-700">
+        @for (gate of verificationGates; track gate.id) {
+          <div 
+            class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-cyan-400 transform rotate-45" 
+            [title]="gate.id + ': ' + gate.name"
+            [style]="getGateStyle(gate.week)">
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Selected Work Package Details -->
+    <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6 h-fit">
+        <h3 class="text-lg font-bold text-white mb-4">Work Package Details</h3>
+        @if (selectedWorkPackage(); as wp) {
+            <div class="space-y-3">
+                <h4 class="text-md font-semibold" [class]="wp.color.replace('bg-', 'text-')">{{ wp.id }}: {{ wp.name }}</h4>
+                <div>
+                    <strong class="text-zinc-400">Deliverables:</strong>
+                    <p class="text-zinc-300 text-sm">{{ wp.deliverables }}</p>
+                </div>
+                <div>
+                    <strong class="text-zinc-400">Acceptance Criteria:</strong>
+                    <p class="text-zinc-300 text-sm">{{ wp.criteria }}</p>
+                </div>
+                <div>
+                    <strong class="text-zinc-400">Dependencies:</strong>
+                    <p class="text-zinc-300 text-sm">{{ wp.deps }}</p>
+                </div>
+            </div>
+        } @else {
+            <p class="text-zinc-500">Click a work package on the timeline to see details.</p>
+        }
+    </div>
+    
+    <!-- Gate Legend -->
+    <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+      <h3 class="text-lg font-bold text-white mb-4">Verification Gate Legend</h3>
+      <div class="space-y-2 text-sm">
+        @for(gate of verificationGates; track gate.id) {
+          <div class="flex items-center">
+            <span class="font-mono text-cyan-400 w-24 flex-shrink-0">{{ gate.id }} (Week {{ gate.week }})</span>
+            <span class="text-zinc-400">{{ gate.criterion }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

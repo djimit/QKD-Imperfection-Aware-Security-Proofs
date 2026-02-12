@@ -1,0 +1,5 @@
+{
+  "name": "QKD Imperfection-Aware Security Proofs Demo",
+  "description": "An interactive six-panel research synthesis of the QKD imperfections paper (arXiv:2602.05057), demonstrating key concepts, methods, and research gaps in a user-friendly interface.",
+  "requestFramePermissions": []
+}
